@@ -24,8 +24,8 @@ services:
     image: redis
     container_name: redis
   user:
-    image: cart:v1
-    container_name: cart
+    image: user:v1
+    container_name: user
     depends_on:
       - mongodb
       - redis
