@@ -12,6 +12,8 @@ services:
       - catalogue
       - user
       - cart
+      - mysql
+      - shipping
   mongodb:
     image: mongodb:v1
     container_name: mongodb
