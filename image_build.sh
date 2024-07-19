@@ -1,4 +1,4 @@
-for i in catalogue mongo user web ; do
+for i in catalogue mongo user web cart ; do
   if [ $i == "mongo" ] ; then
     cd $i ; docker build -t mongodb:v1 . ; cd ..
   else
