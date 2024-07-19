@@ -1,6 +1,7 @@
 for i in catalogue mongo user web ; do
   if [ $i == "mongo" ] ; then
-    i="mongodb"
+    cd $i ; docker build -t mongodb:v1 . ; cd ..
+  else
+    cd $i ; docker build -t $i:v1 . ; cd ..
   fi
-	cd $i ; docker build -t $i:v1 . ; cd ..
 done
