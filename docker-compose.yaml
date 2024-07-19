@@ -22,6 +22,7 @@ services:
       - mongodb
   redis:
     image: redis
+    container_name: redis
   user:
     image: cart:v1
     container_name: cart
