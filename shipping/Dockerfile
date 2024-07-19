@@ -1,5 +1,10 @@
 FROM debian:10 AS build
-RUN apt-get update && apt-get -y install maven
+#RUN apt-get update && apt-get -y install maven
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends apt-utils && \
+    apt-get install -y openjdk-11-jre-headless && \
+    apt-get install -y ca-certificates-java && \
+    apt-get install -y maven
 WORKDIR /opt/shipping
 COPY pom.xml /opt/shipping/
 RUN mvn dependency:resolve
