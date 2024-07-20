@@ -4,7 +4,7 @@ networks:
     driver: bridge
 services:
   web:
-    image: web:v1
+    image: revanthsatyam/web:v1
     container_name: web
     ports:
       - "80:80"
@@ -16,10 +16,10 @@ services:
       - shipping
       - payment
   mongodb:
-    image: mongodb:v1
+    image: revanthsatyam/mongodb:v1
     container_name: mongodb
   catalogue:
-    image: catalogue:v1
+    image: revanthsatyam/catalogue:v1
     container_name: catalogue
     depends_on:
       - mongodb
@@ -27,22 +27,22 @@ services:
     image: redis
     container_name: redis
   user:
-    image: user:v1
+    image: revanthsatyam/user:v1
     container_name: user
     depends_on:
       - mongodb
       - redis
   cart:
-    image: cart:v1
+    image: revanthsatyam/cart:v1
     container_name: cart
     depends_on:
       - redis
       - catalogue
   mysql:
-    image: mysql:v1
+    image: revanthsatyam/mysql:v1
     container_name: mysql
   shipping:
-    image: shipping:v1
+    image: revanthsatyam/shipping:v1
     container_name: shipping
     depends_on:
       - mysql
@@ -50,12 +50,12 @@ services:
     image: rabbitmq
     container_name: rabbitmq
   payment:
-    image: payment:v1
+    image: revanthsatyam/payment:v1
     container_name: payment
     depends_on:
       - rabbitmq
   ratings:
-    image: ratings:v1
+    image: revanthsatyam/ratings:v1
     container_name: ratings
     depends_on:
       - mysql
