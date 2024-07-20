@@ -33,7 +33,7 @@ services:
       - mongodb
       - redis
   cart:
-    image: revanthsatyam/cart:v1
+    image: revanthsatyam/cart:v2
     container_name: cart
     depends_on:
       - redis
