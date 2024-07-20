@@ -42,7 +42,7 @@ services:
     image: revanthsatyam/mysql:v1
     container_name: mysql
   shipping:
-    image: revanthsatyam/shipping:v1
+    image: revanthsatyam/shipping:v2
     container_name: shipping
     depends_on:
       - mysql
