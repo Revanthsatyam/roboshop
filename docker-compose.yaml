@@ -1,10 +1,37 @@
-version: "3.9"
+codeversion: "3.9"
 networks:
   roboshop:
     driver: bridge
+volumes:
+  # This is equivalent to docker volume create [volume-name]. these are named volumes
+  mysql:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/ec2-user/mysql
+  redis:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/ec2-user/redis
+  rabbitmq:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/ec2-user/rabbitmq
+  mongodb:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/ec2-user/mongodb
+
 services:
   web:
-    image: revanthsatyam/web:v1
+    image: web:v1
     container_name: web
     ports:
       - "80:80"
@@ -14,48 +41,55 @@ services:
       - cart
       - mysql
       - shipping
-      - payment
   mongodb:
-    image: revanthsatyam/mongodb:v1
+    image: mongodb:v1
     container_name: mongodb
+    volumes:
+      - mongodb:/data/db
   catalogue:
-    image: revanthsatyam/catalogue:v1
+    image: catalogue:v1
     container_name: catalogue
     depends_on:
       - mongodb
   redis:
     image: redis
     container_name: redis
+    volumes:
+      - redis:/data
   user:
-    image: revanthsatyam/user:v1
+    image: user:v1
     container_name: user
     depends_on:
       - mongodb
       - redis
   cart:
-    image: revanthsatyam/cart:v2
+    image: cart:v1
     container_name: cart
     depends_on:
       - redis
       - catalogue
   mysql:
-    image: revanthsatyam/mysql:v1
+    image: mysql:v1
     container_name: mysql
+    volumes:
+      - mysql:/var/lib/mysql
   shipping:
-    image: revanthsatyam/shipping:v2
+    image: shipping:v1
     container_name: shipping
     depends_on:
       - mysql
   rabbitmq:
     image: rabbitmq
     container_name: rabbitmq
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
   payment:
-    image: revanthsatyam/payment:v1
+    image: payment:v1
     container_name: payment
     depends_on:
       - rabbitmq
   ratings:
-    image: revanthsatyam/ratings:v1
+    image: ratings:v1
     container_name: ratings
     depends_on:
       - mysql
